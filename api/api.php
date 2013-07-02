@@ -5,9 +5,9 @@ require_once '../vendor/autoload.php';
 
 header('Access-Control-Allow-Origin: *');
 
-slim\Slim\Slim::registerAutoloader();
+\Slim\Slim::registerAutoloader();
 // Create an instance of Slim
-$app = new slim\Slim\Slim();
+$app = new \Slim\Slim();
 
 $app->get('/api/:name', function ($name) {
 //    $client = new Github\Client();
