@@ -41,6 +41,7 @@ function getContributions(owner, repo){
  * @returns void
  */
 function vizData(data){
+	// TODO: CHECK IF DATA IS EMPTY!
 	$.each(data, function(i, val){
 		var totalCommits = data[i].total;
 		var authorName = data[i].author.login;
@@ -54,7 +55,7 @@ function vizData(data){
 					+ timestampToDate(data[i].weeks[wi].w) + "</li><ul>" 
 					+ "<li>Additions: " + data[i].weeks[wi].a + "</li>" 
 					+ "<li>Deletions: " + data[i].weeks[wi].d + "</li>" 
-					+ "<li>Aantal commits: " + data[i].weeks[wi].c + "</li></ul>";
+					+ "<li>Number of commits: " + data[i].weeks[wi].c + "</li></ul>";
 		});
 		// Add all week data to user details
 		userDetails += weekDetails;
