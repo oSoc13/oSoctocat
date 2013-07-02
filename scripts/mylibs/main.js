@@ -63,7 +63,8 @@ function vizData(data, projectname){
 		var totalCommits = data[i].total;
 		var authorName = data[i].author.login;
 		// Set up user details
-		projectDetails += "<h2>" + authorName + "</h2><img class='avatar' src=' " + data[i].author.avatar_url + "'/><ul><li>Total commits: " + totalCommits + "</li>";
+		var userDetails = "";
+		userDetails += "<h2>" + authorName + "</h2><img class='avatar' src=' " + data[i].author.avatar_url + "'/><ul><li>Total commits: " + totalCommits + "</li>";
 		// Get week details
 		var weekDetails = "";
 		// Run through all weeks
@@ -75,12 +76,12 @@ function vizData(data, projectname){
 					+ "<li>Number of commits: " + data[i].weeks[wi].c + "</li></ul>";
 		});
 		// Add all week data to user details
-		projectDetails += weekDetails;
+		userDetails += weekDetails;
 		// Close user details ul
-		projectDetails += "</ul>";
-		// Append to body
-		$("body").append(projectDetails);
+		userDetails += "</ul>";
+		projectDetails += userDetails;
 	});
+	$("body").append(projectDetails);
 }
 
 /**
