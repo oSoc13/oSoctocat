@@ -4,7 +4,6 @@
  * Main stylesheet for oSoctocat.
  */
 
-root { 
-    display: block;
+img.avatar{
+	max-width: 90px;
 }
-

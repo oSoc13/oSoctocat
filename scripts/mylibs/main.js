@@ -30,7 +30,51 @@ function getContributions(owner, repo){
         beforeSend: function(xhr) {
         },
         success: function(data){
-			// Parse data
+			vizData(data);
 		}
 	});
+}
+
+/**
+ * Displays details for certain project. All contributors are visualized.
+ * @param {type} data (received from e.g. getContributions)
+ * @returns void
+ */
+function vizData(data){
+	$.each(data, function(i, val){
+		var totalCommits = data[i].total;
+		var authorName = data[i].author.login;
+		// Set up user details
+		var userDetails = "<h2>" + authorName + "</h2><img class='avatar' src=' " + data[i].author.avatar_url + "'/><ul><li>Total commits: " + totalCommits + "</li>";
+		// Get week details
+		var weekDetails = "";
+		// Run through all weeks
+		$.each(data[i].weeks, function (wi, val){
+			weekDetails += "<li>Commits for week of "
+					+ timestampToDate(data[i].weeks[wi].w) + "</li><ul>" 
+					+ "<li>Additions: " + data[i].weeks[wi].a + "</li>" 
+					+ "<li>Deletions: " + data[i].weeks[wi].d + "</li>" 
+					+ "<li>Aantal commits: " + data[i].weeks[wi].c + "</li></ul>";
+		});
+		// Add all week data to user details
+		userDetails += weekDetails;
+		// Close user details ul
+		userDetails += "</ul>";
+		// Append to body
+		$("body").append(userDetails);
+	});
+}
+
+
+/**
+ * Converts a unix Timestamp to a Date object and returns a string like "Mon June 1 2013"
+ * @param {type} timestamp
+ * @returns {String}
+ */
+function timestampToDate(timestamp){
+	var date = new Date(timestamp*1000);
+	var d_arr = date.toString().split(" ");
+	var originaldate = d_arr[0] + " " + d_arr[1] + " " + d_arr[2] + " " + d_arr[3];
+	return originaldate;
+	
 }
