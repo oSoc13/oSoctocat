@@ -4,11 +4,14 @@
  * Allows getting contribution data
  */
 
-/* Do things on DOM load */
+/* List of all projects */
 
 var projects = new Array("TheWookies", "BarberShop", "oSoctocat", "FoursquareBot", "gentsefeesten");
 
+/* Do things on DOM load */
+
 $(function(){
+	/* For each project, get contributions + visualize! */
 	$.each(projects, function(i, val){
 		getContributions("oSoc13",val);
 	});
@@ -22,9 +25,12 @@ $(function(){
  */
 
 function getContributions(owner, repo){
+	// TODO: Replace this call to their API with our own API "app" call
+	// Determine correct URL for API
 	var url = "https://api.github.com/repos/:owner/:repo/stats/contributors";
 	url = url.replace(":owner", owner);
 	url = url.replace(":repo", repo);
+	// Perform GET request to API and visualize
 	$.ajax({
         type: "GET",
         dataType: "json",
@@ -35,6 +41,11 @@ function getContributions(owner, repo){
         },
         success: function(data){
 			vizData(data, repo);
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			// If something goes wrong, this is what we see
+			$("body").append("<p>Request to: " + url + " failed. Error: " + 
+					 errorThrown + ". API limit reached?</p>");
 		}
 	});
 }
@@ -42,7 +53,7 @@ function getContributions(owner, repo){
 /**
  * Displays details for certain project. All contributors are visualized.
  * @param {json} data (received from e.g. getContributions)
- * @param {string} projectname
+ * @param {string} projectname (on GitHub)
  * @returns void
  */
 function vizData(data, projectname){
@@ -82,5 +93,4 @@ function timestampToDate(timestamp){
 	var d_arr = date.toString().split(" ");
 	var originaldate = d_arr[0] + " " + d_arr[1] + " " + d_arr[2] + " " + d_arr[3];
 	return originaldate;
-	
 }
