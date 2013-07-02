@@ -1,35 +1,36 @@
 /* 
  * (c) 2013, OKFN. All rights reserved.
  * Author: @nicoverbruggen
- * Placeholder Javascript file
+ * Allows getting contribution data
  */
-
 
 /* Do things on DOM load */
 
 $(function(){
-	getSomeData();
+	getContributions("oSoc13","oSoctocat");
 });
 
 /**
- * getSomeData() will try and fetch data from the repo
- * @returns {undefined}
+ * Get contributions for a certain repo, owned by a certain user.
+ * @param {string} owner
+ * @param {string} repo
+ * @returns void
  */
-function getSomeData(){
+
+function getContributions(owner, repo){
+	var url = "https://api.github.com/repos/:owner/:repo/stats/contributors";
+	url = url.replace(":owner", owner);
+	url = url.replace(":repo", repo);
 	$.ajax({
         type: "GET",
         dataType: "json",
         contentType: "application/json",
         cache: false,
-        url: "https://api.github.com/repos/oSoc13/oSoctocat/stats/code_frequency",
+        url: url,
         beforeSend: function(xhr) {
         },
         success: function(data){
-			var phptimestamp = data[0][0];
-			var date = new Date(phptimestamp*1000);
-			$("body").append("<p>Timestamp of date: " + date + "</p>");
-			$("body").append("<p>Additions: " + data[0][1] + "</p>");
-			$("body").append("<p>Deletions: " + data[0][2] + "</p>");
+			// Parse data
 		}
-		});
+	});
 }
