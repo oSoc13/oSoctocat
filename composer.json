@@ -1,6 +1,7 @@
 {
     "require": {
-        "knplabs/github-api": "*"
+        "knplabs/github-api": "*",
+        "slim/slim": "2.*"
     },
     "minimum-stability": "dev"
 }
