@@ -6,8 +6,12 @@
 
 /* Do things on DOM load */
 
+var projects = new Array("TheWookies", "BarberShop", "oSoctocat", "FoursquareBot", "gentsefeesten");
+
 $(function(){
-	getContributions("oSoc13","oSoctocat");
+	$.each(projects, function(i, val){
+		getContributions("oSoc13",val);
+	});
 });
 
 /**
@@ -30,23 +34,25 @@ function getContributions(owner, repo){
         beforeSend: function(xhr) {
         },
         success: function(data){
-			vizData(data);
+			vizData(data, repo);
 		}
 	});
 }
 
 /**
  * Displays details for certain project. All contributors are visualized.
- * @param {type} data (received from e.g. getContributions)
+ * @param {json} data (received from e.g. getContributions)
+ * @param {string} projectname
  * @returns void
  */
-function vizData(data){
+function vizData(data, projectname){
 	// TODO: CHECK IF DATA IS EMPTY!
+	var projectDetails = "<h1>" + projectname + "</h1>";
 	$.each(data, function(i, val){
 		var totalCommits = data[i].total;
 		var authorName = data[i].author.login;
 		// Set up user details
-		var userDetails = "<h2>" + authorName + "</h2><img class='avatar' src=' " + data[i].author.avatar_url + "'/><ul><li>Total commits: " + totalCommits + "</li>";
+		projectDetails += "<h2>" + authorName + "</h2><img class='avatar' src=' " + data[i].author.avatar_url + "'/><ul><li>Total commits: " + totalCommits + "</li>";
 		// Get week details
 		var weekDetails = "";
 		// Run through all weeks
@@ -58,14 +64,13 @@ function vizData(data){
 					+ "<li>Number of commits: " + data[i].weeks[wi].c + "</li></ul>";
 		});
 		// Add all week data to user details
-		userDetails += weekDetails;
+		projectDetails += weekDetails;
 		// Close user details ul
-		userDetails += "</ul>";
+		projectDetails += "</ul>";
 		// Append to body
-		$("body").append(userDetails);
+		$("body").append(projectDetails);
 	});
 }
-
 
 /**
  * Converts a unix Timestamp to a Date object and returns a string like "Mon June 1 2013"
