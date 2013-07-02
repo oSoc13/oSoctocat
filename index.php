@@ -18,8 +18,7 @@ $client->authenticate($usernameOrToken, $password, $method);
 
 $contributors = $client->api('repo')->contributors('oSoc13', 'oSoctocat');
 
-//var_dump(json_encode($contributors, JSON_PRETTY_PRINT));
-var_dump($client);
+var_dump(json_encode($contributors, JSON_PRETTY_PRINT));
 
 ?>
 <!Doctype HTML>
