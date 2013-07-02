@@ -9,22 +9,22 @@ header('Access-Control-Allow-Origin: *');
 // Create an instance of Slim
 $app = new \Slim\Slim();
 
-$app->get('/api/:name', function ($name) {
-//    $client = new Github\Client();
-//    $method = Github\Client::AUTH_URL_CLIENT_ID;
-//    $filename = "http://localhost:8888/oSoctocat/config/githubApp.txt";
-//    $lines = file($filename, FILE_IGNORE_NEW_LINES);
-//    $usernameOrToken = $lines[1];
-//    $password = $lines[3];
-//    $client->authenticate($usernameOrToken, $password, $method);
-//
-//    $contributors = $client->getHttpClient()->get($path);
-//    echo $contributors->getContent();
-    //header('Content-Type', 'application/json');
-            echo $name;
+$app->get('/:name', function ($name) {
+    $name = str_replace(array(" ", "+"),"/", $name);
+    $client = new Github\Client();
+    $method = Github\Client::AUTH_URL_CLIENT_ID;
+    $filename = "../config/githubApp.txt";
+    $lines = file($filename, FILE_IGNORE_NEW_LINES);
+    $usernameOrToken = $lines[1];
+    $password = $lines[3];
+    $client->authenticate($usernameOrToken, $password, $method);
+
+    $contributors = $client->getHttpClient()->get($name);
+    header('Content-Type', 'application/json');
+    echo json_encode($contributors->getContent());
+    
 });
 
 // Run Slim app
 
 $app->run();
-

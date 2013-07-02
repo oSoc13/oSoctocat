@@ -27,7 +27,7 @@ $(function(){
 function getContributions(owner, repo){
 	// TODO: Replace this call to their API with our own API "app" call
 	// Determine correct URL for API
-	var url = "https://api.github.com/repos/:owner/:repo/stats/contributors";
+	var url = "http://localhost:8888/oSoctocat/api/repos+:owner+:repo+stats+contributors";
 	url = url.replace(":owner", owner);
 	url = url.replace(":repo", repo);
 	// Perform GET request to API and visualize
