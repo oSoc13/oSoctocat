@@ -1,7 +1,7 @@
 oSoctocat
 =========
 
-Hackaton project 02/07 #oSoc13
+Hackathon project 02/07 #oSoc13
 Visualizations for GitHub API (#oSoc13)
 
 Copyright 2013 OKFN.
